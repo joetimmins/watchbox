@@ -1,0 +1,26 @@
+# Android Studio IDE settings
+.idea/*
+!.idea/codeStyleSettings.xml
+*.iml
+
+# Gradle cache, build output, macOS stuff
+.gradle
+/local.properties
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+
+# Built application files
+*.apk
+*.aar
+*.ap_
+*.aab
+
+# Backup files
+projectFilesBackup/
+projectFilesBackup1/
+
+# R8 output files
+usage.txt
+full-r8*.txt
