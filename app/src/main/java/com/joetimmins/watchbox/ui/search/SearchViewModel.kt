@@ -2,7 +2,6 @@ package com.joetimmins.watchbox.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.joetimmins.watchbox.ContentCardData
 import com.joetimmins.watchbox.model.ContentSearchRepository
 import com.joetimmins.watchbox.model.ContentType
 import com.joetimmins.watchbox.model.http.OmdbService
