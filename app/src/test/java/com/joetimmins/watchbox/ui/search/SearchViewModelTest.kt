@@ -102,8 +102,7 @@ class SearchViewModelTest {
     }
 
     private fun searchViewModel(repository: ContentSearchRepository) = SearchViewModel(
-        repository = repository,
-        dispatchers = rule.testDispatchers
+        repository = repository
     )
 }
 
