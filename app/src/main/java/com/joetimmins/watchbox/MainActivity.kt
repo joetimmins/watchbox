@@ -13,12 +13,16 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.sharp.MailOutline
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
 import com.joetimmins.watchbox.ui.theme.WatchboxTheme
@@ -111,17 +115,19 @@ data class ContentCardData(
     val posterUrl: String,
 )
 
+private val fourGuardiansOfTheGalaxyCards = listOf(
+    guardiansOfTheGalaxy2,
+    guardiansOfTheGalaxy2,
+    guardiansOfTheGalaxy2,
+    guardiansOfTheGalaxy2,
+)
+
 @OptIn(ExperimentalMaterialApi::class)
 @Preview
 @Composable
 fun PreviewContentGrid() {
     ContentGrid(
-        allCardData = listOf(
-            guardiansOfTheGalaxy2,
-            guardiansOfTheGalaxy2,
-            guardiansOfTheGalaxy2,
-            guardiansOfTheGalaxy2,
-        ),
+        allCardData = fourGuardiansOfTheGalaxyCards,
         onContentClick = {}
     )
 }
@@ -141,5 +147,39 @@ fun ContentGrid(
                 onContentClick = onContentClick
             )
         }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Preview
+@Composable
+fun SearchScreenContent() {
+    Column(modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        TopAppBar() {
+            Text(
+                text = stringResource(id = R.string.app_name),
+                style = TextStyle.Default.copy(fontSize = 20.sp),
+                modifier = Modifier.padding(start = 16.dp)
+            )
+        }
+        Row {
+            Spacer(modifier = Modifier.weight(1f))
+            IconToggleButton(checked = true, onCheckedChange = {}) {
+                Text(text = stringResource(R.string.movie))
+            }
+            IconToggleButton(checked = false, onCheckedChange = {}) {
+                Text(text = stringResource(R.string.series))
+            }
+            Spacer(modifier = Modifier.weight(1f))
+        }
+        OutlinedTextField(
+            value = "",
+            onValueChange = {},
+            modifier = Modifier.align(Alignment.CenterHorizontally)
+        )
+        ContentGrid(
+            allCardData = fourGuardiansOfTheGalaxyCards,
+            onContentClick = {},
+        )
     }
 }
