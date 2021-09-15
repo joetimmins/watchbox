@@ -23,7 +23,7 @@ class SearchViewModel(
         _uiStateFlow.tryEmit(uiState.copy(requestStatus = RequestStatus.Requesting))
     }
 
-    fun onMovieSelected() {}
+    fun onMoviesSelected() {}
 
     fun onSeriesSelected() {}
 }

@@ -132,7 +132,7 @@ fun SearchScreenContent() {
             Spacer(modifier = Modifier.weight(1f))
             IconToggleButton(
                 checked = state.value.selectedContentType == ContentType.Movie,
-                onCheckedChange = { viewModel.onMovieSelected() }) {
+                onCheckedChange = { viewModel.onMoviesSelected() }) {
                 Text(text = stringResource(R.string.movie))
             }
             IconToggleButton(
