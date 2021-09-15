@@ -4,7 +4,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface OmdbContentDetailClient {
-    @GET
+    @GET("/")
     suspend fun detail(
         @Query("i") imdbId: String,
         @Query("apikey") apiKey: String = omdbApiKey
