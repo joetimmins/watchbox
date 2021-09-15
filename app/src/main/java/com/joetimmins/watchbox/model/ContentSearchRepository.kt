@@ -22,11 +22,10 @@ class ContentSearchRepository(
 
     private suspend fun searchFor(input: SearchInput) = withContext(dispatchers.io) {
         runCatching {
-            val search = searchClient.search(
+            searchClient.search(
                 searchTerm = input.term,
                 contentType = input.contentType.rawContentType
             )
-            search
         }
     }
 
