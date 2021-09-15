@@ -3,6 +3,7 @@ package com.joetimmins.watchbox.model.http
 import com.joetimmins.watchbox.CoroutineTestRule
 import com.joetimmins.watchbox.enqueueResponse
 import com.joetimmins.watchbox.model.ApiSearchResult
+import com.joetimmins.watchbox.model.ApiSearchResults
 import kotlinx.coroutines.runBlocking
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.Assert.assertEquals
@@ -24,17 +25,23 @@ class OmdbContentSearchClientTest {
         mockWebServer.enqueueResponse("search-results.json")
 
         runBlocking {
-            val result = searchClient.search("", "", "")
+            val searchResults = searchClient.search("", "", "")
             assertEquals(
-                ApiSearchResult(
-                    title = "Twin Peaks",
-                    yearRange = "1990–1991",
-                    imdbId = "tt0098936",
-                    contentType = "series",
-                    posterUrl = "https://m.media-amazon.com/images/M/MV5BMTExNzk2NjcxNTNeQTJeQWpwZ15BbWU4MDcxOTczOTIx._V1_SX300.jpg"
-                ),
-                result.results.first()
+                apiSearchResults,
+                searchResults
             )
         }
     }
 }
+
+private val apiSearchResults = ApiSearchResults(
+    results = listOf(
+        ApiSearchResult(
+            title = "Twin Peaks",
+            yearRange = "1990–1991",
+            imdbId = "tt0098936",
+            contentType = "series",
+            posterUrl = "https://m.media-amazon.com/images/M/MV5BMTExNzk2NjcxNTNeQTJeQWpwZ15BbWU4MDcxOTczOTIx._V1_SX300.jpg"
+        )
+    )
+)
