@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Watchbox</string>
-    <string name="movie">Movie</string>
+    <string name="movies">Movies</string>
     <string name="series">Series</string>
 </resources>

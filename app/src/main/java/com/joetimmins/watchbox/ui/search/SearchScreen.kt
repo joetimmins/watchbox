@@ -2,12 +2,14 @@ package com.joetimmins.watchbox.ui.search
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.sharp.MailOutline
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -103,7 +105,9 @@ fun ContentGrid(
     allCardData: List<ContentCardData>,
     onContentClick: () -> Unit,
 ) {
-    LazyVerticalGrid(cells = GridCells.Adaptive(120.dp)) {
+    LazyVerticalGrid(
+        cells = GridCells.Adaptive(180.dp),
+    ) {
         items(allCardData) { cardData ->
             ContentCard(
                 cardData = cardData,
@@ -120,7 +124,12 @@ fun SearchScreenContent() {
     val viewModel = viewModel<SearchViewModel>(factory = SearchViewModelFactory())
     val state = viewModel.uiStateFlow.collectAsState()
 
-    Column(modifier = Modifier.fillMaxHeight(), verticalArrangement = Arrangement.spacedBy(8.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxHeight()
+            .background(color = MaterialTheme.colors.background),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
         TopAppBar() {
             Text(
                 text = stringResource(id = R.string.app_name),
@@ -128,17 +137,41 @@ fun SearchScreenContent() {
                 modifier = Modifier.padding(start = 16.dp)
             )
         }
-        Row {
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             Spacer(modifier = Modifier.weight(1f))
+            val moviesChecked = state.value.selectedContentType == ContentType.Movie
             IconToggleButton(
-                checked = state.value.selectedContentType == ContentType.Movie,
+                checked = moviesChecked,
+                modifier = Modifier
+                    .background(color = MaterialTheme.colors.secondaryVariant)
+                    .height(56.dp)
+                    .width(140.dp),
                 onCheckedChange = { viewModel.onMoviesSelected() }) {
-                Text(text = stringResource(R.string.movie))
+                Row {
+                    Text(text = stringResource(R.string.movies))
+                    if (moviesChecked) Icon(
+                        Icons.Filled.Check,
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
+            val seriesChecked = state.value.selectedContentType == ContentType.Series
             IconToggleButton(
-                checked = state.value.selectedContentType == ContentType.Series,
+                checked = seriesChecked,
+                modifier = Modifier
+                    .background(color = MaterialTheme.colors.secondaryVariant)
+                    .height(56.dp)
+                    .width(140.dp),
                 onCheckedChange = { viewModel.onSeriesSelected() }) {
-                Text(text = stringResource(R.string.series))
+                Row {
+                    Text(text = stringResource(R.string.series))
+                    if (seriesChecked) Icon(
+                        Icons.Filled.Check,
+                        contentDescription = null,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
             Spacer(modifier = Modifier.weight(1f))
         }
