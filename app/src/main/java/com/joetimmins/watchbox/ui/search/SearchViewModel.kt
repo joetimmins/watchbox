@@ -2,6 +2,7 @@ package com.joetimmins.watchbox.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.joetimmins.watchbox.model.ApiContentSearchRepository
 import com.joetimmins.watchbox.model.ContentSearchRepository
 import com.joetimmins.watchbox.model.ContentType
 import com.joetimmins.watchbox.model.http.OmdbService
@@ -37,7 +38,7 @@ data class SearchUiState(
 class SearchViewModelFactory : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         val dispatchers = InjectableDispatchers()
-        val repository = ContentSearchRepository(OmdbService.client, dispatchers)
+        val repository = ApiContentSearchRepository(OmdbService.client, dispatchers)
         val viewModel = SearchViewModel(repository, dispatchers)
         return modelClass.cast(viewModel)!!
     }

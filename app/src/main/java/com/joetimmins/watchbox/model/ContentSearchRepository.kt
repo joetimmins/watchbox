@@ -6,15 +6,21 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.withContext
 
+interface ContentSearchRepository {
+    val searchResults: Flow<ContentSearchResults>
+
+    fun search(term: String, contentType: ContentType)
+}
+
 @OptIn(ExperimentalCoroutinesApi::class)
-class ContentSearchRepository(
+class ApiContentSearchRepository(
     private val searchClient: OmdbContentSearchClient,
     private val dispatchers: InjectableDispatchers
-) {
+) : ContentSearchRepository {
     private val searchInput =
         MutableStateFlow(SearchInput(term = "", contentType = ContentType.Movie))
 
-    val searchResults: Flow<ContentSearchResults> = searchInput
+    override val searchResults: Flow<ContentSearchResults> = searchInput
         .filter { it.term.length > 2 }
         .mapLatest { searchFor(it) }
         .map { apiSearchResults -> apiSearchResults.toContentSearchResults() }
@@ -29,7 +35,7 @@ class ContentSearchRepository(
         }
     }
 
-    fun search(term: String, contentType: ContentType) {
+    override fun search(term: String, contentType: ContentType) {
         searchInput.tryEmit(SearchInput(term, contentType))
     }
 }

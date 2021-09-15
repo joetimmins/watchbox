@@ -12,7 +12,7 @@ import org.junit.Test
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)
-class ContentSearchRepositoryTest {
+class ApiContentSearchRepositoryTest {
     @get:Rule
     val rule = CoroutineTestRule()
 
@@ -85,7 +85,7 @@ class ContentSearchRepositoryTest {
 
     private fun contentSearchRepository(
         searchClient: OmdbContentSearchClient
-    ) = ContentSearchRepository(
+    ) = ApiContentSearchRepository(
         searchClient = searchClient,
         dispatchers = rule.testDispatchers
     )
