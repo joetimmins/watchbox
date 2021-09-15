@@ -44,12 +44,18 @@ class SearchViewModel(
         }
     }
 
-    fun onMoviesSelected() = _uiStateFlow.update { uiState ->
-        uiState.copy(selectedContentType = ContentType.Movie)
+    fun onMoviesSelected() {
+        _uiStateFlow.update { uiState ->
+            uiState.copy(selectedContentType = ContentType.Movie)
+        }
+        repository.search(_uiStateFlow.value.searchTerm, ContentType.Movie)
     }
 
-    fun onSeriesSelected() = _uiStateFlow.update { uiState ->
-        uiState.copy(selectedContentType = ContentType.Series)
+    fun onSeriesSelected() {
+        _uiStateFlow.update { uiState ->
+            uiState.copy(selectedContentType = ContentType.Series)
+        }
+        repository.search(_uiStateFlow.value.searchTerm, ContentType.Series)
     }
 }
 
