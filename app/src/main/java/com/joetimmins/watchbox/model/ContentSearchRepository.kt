@@ -40,32 +40,6 @@ private data class SearchInput(
     val contentType: ContentType
 )
 
-enum class ContentType(val rawContentType: String) {
-    Movie("movie"),
-    Series("series");
-
-    companion object {
-        fun fromRawValue(rawValue: String): ContentType = values().first {
-            it.rawContentType == rawValue.lowercase()
-        }
-    }
-}
-
-sealed interface AirDate {
-    data class Single(val yearReleased: Int) : AirDate
-    data class Ongoing(val yearFirstShown: Int, val yearLastShown: Int?) : AirDate
-
-}
-
-fun String.toAirDate(): AirDate {
-    val s = split('–') // believe it or not ... this is *not* a regular dash -
-    return when (s.size) {
-        1 -> AirDate.Single(s.first().toInt())
-        2 -> AirDate.Ongoing(s.first().toInt(), s.last().toIntOrNull())
-        else -> throw IllegalArgumentException("Invalid year range.")
-    }
-}
-
 sealed interface ContentSearchResults {
     object NoSearchPerformed : ContentSearchResults
     object Failure : ContentSearchResults
@@ -94,5 +68,5 @@ private fun ApiSearchResult.toContentSearchResult() = ContentSearchResult(
     imdbId = imdbId,
     posterUrl = posterUrl,
     contentType = ContentType.fromRawValue(contentType),
-    airDate = yearRange.toAirDate()
+    airDate = AirDate.fromYearRange(yearRange)
 )
